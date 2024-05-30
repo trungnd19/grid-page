@@ -14,7 +14,9 @@ $color-grey-dark-2: #6D5D4B;
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
@@ -30,4 +32,22 @@ body {
     color: $color-grey-dark-2;
     font-weight: 300;
     line-height: 1.6;
+}
+
+.container {
+    display: grid;
+    // min-content: size của row theo content
+    // 80vh: row này bao giờ cx dài 80vh
+    // 40vw: dùng vw để define height của row với mục đích để responsive khi thay đổi width
+    // 1. He defined the height of the row using the vw unit. 
+    // 2. It's done so because we want to make it responsive in the horizontal direction. 
+    // 3. if we decrease the viewport width in the horizontal direction, it decrease the row height. 
+    // 4. if we have used the vh unit then it wouldn't be possible to reduce the row height while decreasing the viewport width
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+    grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] 
+                            minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    // 8 columns, widht min là min-content, width max là 14rem
+    // Để 8 columns ở giữa màn hình => thêm vào bên phải, bên trái mỗi bên 1 column 1fr
+    // columns quan trọng hơn row
+    // Nếu row thêm vào để 1fr => khi không còn đất nữa thì column này sẽ biến mất, khiến cho các phần dính nhau, không có margin => giải pháp là dùng minmax
 }
